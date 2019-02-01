@@ -21,4 +21,4 @@ install:
   - source activate test-z
   
 script:
-	./run.sh
+-./run.sh
