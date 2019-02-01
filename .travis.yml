@@ -16,7 +16,7 @@ install:
   - conda info -a
   # Replace dep1 dep2 ... with your dependencies
   - conda env create -f conreq.yml
-  - source activate test-z
+  - source activate test_z
   
 script:
   - ./run.sh
