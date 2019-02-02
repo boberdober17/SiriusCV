@@ -8,7 +8,7 @@ def getData(num_tests, start):
     else:
         cityscapesPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..')
     searchAnnotated = os.path.join(cityscapesPath, "gtFine", "train", "*", "*_gt*_labelTrain*")
-    searchRaw = os.path.join(cityscapesPath, "img8bit", "train", "*", "*_gt*_polygons.json")
+    searchRaw = os.path.join(cityscapesPath, "img8bit", "train", "*", "*.png")
     filesAnnotated =glob.glob(searchAnnotated)
     filesRaw=glob.glob(searchRaw)
     filesAnnotated.sort()
