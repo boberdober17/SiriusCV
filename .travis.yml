@@ -9,6 +9,6 @@ before_install:
   - docker pull rvygon/envdocker
    
 script:
-  
-  - docker run rvygon/envdocker /bin/sh "source activate test_z; jupyter nbconvert --to html --execute seminar_image_processing_intro.ipynb"
+ 
+  - docker run rvygon/envdocker /bin/sh -c "source activate test_z; jupyter nbconvert --to html --execute seminar_image_processing_intro.ipynb"
 
