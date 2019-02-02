@@ -30,6 +30,9 @@ def importBatch(num_tests, start):   #load batch of data from train dataset
         X_input.append(X_img)
         y_input.append(y_img)
     return X_input, y_input
+def initTrain():
+    import cityscapesscripts.preparation.createTrainIdLabelImgs
+    import cityscapesscripts.preparation.createTrainIdInstanceImgs
 
 
 
