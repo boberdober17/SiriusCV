@@ -1,7 +1,7 @@
 from __future__ import print_function, absolute_import, division
 import os, glob, sys
 from skimage.io import imread, imshow, imsave
-#import cityscapescripts
+import cityscapescripts
 def getData(num_tests, start):
     if 'CITYSCAPES_DATASET' in os.environ:
         cityscapesPath = os.environ['CITYSCAPES_DATASET']
@@ -22,7 +22,7 @@ def importBatch(num_tests, start):   #load batch of data from train dataset
     y_files, X_files = getData(num_tests,start)
     X_input = []
     y_input = []
-    for i in range(X_files):
+    for i in range(X_files.shape[0]):
         y_file = y_files[i]
         X_file = X_files[i]
         X_img = imread(X_file)
