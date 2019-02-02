@@ -2,6 +2,11 @@ language: python
 python:
   # We don't actually use the Travis Python, but this keeps it organized.
    - "3.6"
+services:
+  - docker
+
+before_install:
+  - docker pull rvygon/envdocker
 install:
   - sudo apt-get update
   # We do this conditionally because it saves us some downloading if the
@@ -16,7 +21,8 @@ install:
   - conda info -a
   # Replace dep1 dep2 ... with your dependencies
   - conda env create -f conreq.yml
-  - source activate test_z
-  
+   
 script:
-  - ./run.sh
+  
+  - docker run rvygon/envdocker /bin/sh "source activate test_z; jupyter nbconvert --to html --execute seminar_image_processing_intro.ipynb"
+
