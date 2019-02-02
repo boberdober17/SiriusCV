@@ -10,4 +10,4 @@ before_install:
    
 script:
  
-  - docker run -ti -v `pwd`:/tmp --rm rvygon/envdocker /bin/bash -c "source activate test_z ;  jupyter nbconvert --to html /tmp/seminar_image_processing_intro.ipynb"
+  - docker run -ti -v `pwd`:/tmp --rm rvygon/envdocker /bin/bash -c "source activate test_z ;  jupyter nbconvert --to html /tmp/CityScapesRV.ipynb

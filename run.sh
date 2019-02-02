@@ -1,1 +1,1 @@
-jupyter nbconvert --to html --execute seminar_image_processing_intro.ipynb
+jupyter nbconvert --to html --execute CityScapesRV.ipynb
