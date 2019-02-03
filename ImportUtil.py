@@ -1,6 +1,7 @@
 from __future__ import print_function, absolute_import, division
 import os, glob, sys
 from skimage.io import imread, imshow, imsave
+import numpy as np
 import cityscapesscripts
 def getData(num_tests, start):
     if 'CITYSCAPES_DATASET' in os.environ:
@@ -8,7 +9,7 @@ def getData(num_tests, start):
     else:
         cityscapesPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..')
     searchAnnotated = os.path.join(cityscapesPath, "gtFine", "train", "*", "*_gt*_labelTrain*")
-    searchRaw = os.path.join(cityscapesPath, "img8bit", "train", "*", "*.png")
+    searchRaw = os.path.join(cityscapesPath, "leftImg8bit", "train", "*", "*.png")
 
     if not searchAnnotated:
         printError("Did not find any annotated files.")
@@ -27,14 +28,25 @@ def importBatch(num_tests, start):   #load batch of data from train dataset
     y_files, X_files = getData(num_tests,start)
     X_input = []
     y_input = []
-    for i in range(len(y_files)):
-        y_file = y_files[i]
+    k = 0
+    for i in range(len(X_files)):
+
+        y_file = y_files[i+k]
         X_file = X_files[i]
+
+        while (y_file.split('/')[7][:-25] != X_file.split('/')[7][:-16]):
+            k+=1
+            y_file = y_files[i+k]
+
         X_img = imread(X_file)
         y_img = imread(y_file)
+
         X_input.append(X_img)
         y_input.append(y_img)
-    return X_input, y_input
+
+    X = np.array(X_input)
+    y = np.array(y_input)
+    return X, y
 def initTrain():
     import cityscapesscripts.preparation.createTrainIdLabelImgs
     import cityscapesscripts.preparation.createTrainIdInstanceImgs
