@@ -22,6 +22,19 @@ def getData(num_tests, start, type):
     filesRaw.sort()
 
     return filesAnnotated[start:start+num_tests], filesRaw[start:start+num_tests]
+def UpscaleImg(img,scale, dims):
+    if dims:
+        new_img = np.zeros(img.shape[0]*scale,img.shape[1]*scale,3)
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                new_img[i*scale:(i+1)*scale,j*scale:(j+1)*scale,:]=img[i,j,:]
+    else:
+        new_img = np.zeros(img.shape[0] * scale, img.shape[1] * scale)
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                new_img[i * scale:(i + 1) * scale, j * scale:(j + 1) * scale] = img[i, j]
+    return new_img
+
 
 def importBatch(num_tests, start, verbose, type="train", scale = 0):   #load batch of data from train dataset
 
