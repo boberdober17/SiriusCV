@@ -133,8 +133,8 @@ else:
 args.groundTruthSearch  = os.path.join( args.cityscapesPath , "gtFine" , "val" , "*", "*_gtFine_labelIds.png" )
 
 # Remaining params
-args.evalInstLevelScore = True
-args.evalPixelAccuracy  = False
+args.evalInstLevelScore = False
+args.evalPixelAccuracy  = True
 args.evalLabels         = []
 args.printRow           = 5
 args.normalized         = True
