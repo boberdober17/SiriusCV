@@ -9,11 +9,11 @@ def colorImage(input_image, output, classes_file, colors_file):
     COLORS = open(colors_file).read().strip().split("\n")
     COLORS = [np.array(c.split(",")).astype("int") for c in COLORS]
     COLORS = np.array(COLORS, dtype="uint8")
-    print(COLORS)
+    #print(COLORS)
     #image = imread(input_image)
     image = input_image
     #classMap = np.argmax(output, axis = 0)
     classMap = output
     mask = COLORS[classMap]
-    output = ((0.0 * image) + (1 * mask)).astype("uint8")
+    output = ((0.4 * image) + (0.6 * mask)).astype("uint8")
     imshow(output)
