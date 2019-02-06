@@ -6,35 +6,6 @@ import os, sys, glob
 from collections import namedtuple
 import fnmatch
 
-def getCsFileInfo(fileName):
-    CsFile = namedtuple('csFile', ['city', 'sequenceNb', 'frameNb', 'type', 'type2', 'ext'])
-    baseName = os.path.basename(fileName)
-    parts = baseName.split('_')
-    parts = parts[:-1] + parts[-1].split('.')
-    if len(parts) == 5:
-        csFile = CsFile( *parts[:-1] , type2="" , ext=parts[-1] )
-    elif len(parts) == 6:
-        csFile = CsFile( *parts )
-    return csFile
-
-def getPrediction(groundTruthFile ):
-    predictionPath = os.path.join(os.environ['CITYSCAPES_DATASET'], "results")
-    walk = []
-    for root, dirnames, filenames in os.walk(predictionPath):
-        walk.append((root,filenames))
-    predictionWalk = walk
-
-    csFile = getCsFileInfo(groundTruthFile)
-    filePattern = "{}_{}_{}*.png".format( csFile.city , csFile.sequenceNb , csFile.frameNb )
-    predictionFile = None
-
-    for root, filenames in predictionWalk:
-        for filename in fnmatch.filter(filenames, filePattern):
-            if not predictionFile:
-                predictionFile = os.path.join(root, filename)
-
-    return predictionFile
-
 
 classes = ['road'   ,
 'sidewalk',
@@ -58,22 +29,14 @@ classes = ['road'   ,
 
 def eval_preds(preds, groundTruth):
     eps = 1e-8
-    """path = os.environ['CITYSCAPES_DATASET']
-    predictionImgList = []
-    groundTruthImgList = []
-    groundTruthSearch = os.path.join(path, "gtFine", "val", "*", "*_gtFine_labelTrainIds.png")
-    groundTruthImgList = glob.glob(groundTruthSearch)"""
     class_ious = np.zeros(20)
-    conf_mtrx=np.zeros((20,20))
-    """for gt in groundTruthImgList:
-        predictionImgList.append(getPrediction(gt))"""
     iou_score = 0
     for i in range(preds.shape[0]):
         sys.stdout.write('\r')
         sys.stdout.write("processed %d images" % i)
         sys.stdout.flush()
         pred = preds[i]
-        gt = groundTruth[i] #(groundTruthImgList[i])
+        gt = groundTruth[i] 
         for j in range(20):
             pred1 = (pred == j)
             gt1 = (gt == j)
