@@ -41,8 +41,8 @@ def importBatch(num_tests, start, verbose, type="train", scale = 0):   #load bat
     y_files, X_files = getData(num_tests,start, type)
     X_input = []
     y_input = []
-    if type=='val':
-        filenames = []
+   # if type=='val':
+    filenames = []
     z = 0
     for i in range(len(X_files)):
 
