@@ -20,6 +20,8 @@ def getData(num_tests, start, type):
     filesRaw=glob.glob(searchRaw)
     filesAnnotated.sort()
     filesRaw.sort()
+    #print (len(filesAnnotated))
+
 
     return filesAnnotated[start:start+num_tests], filesRaw[start:start+num_tests]
 def UpscaleImg(img,scale, dims):
@@ -35,10 +37,63 @@ def UpscaleImg(img,scale, dims):
                 new_img[i * scale:(i + 1) * scale, j * scale:(j + 1) * scale] = img[i, j]
     return new_img
 
+def importRandomBatch(num, type, scale = 0):
+    X_files, y_files = getData(3000, 0, type)
+    r = np.random.choice(len(X_files), num)
+
+    y1_files = np.array(X_files)
+    X1_files = np.array(y_files)
+    #print(X1_files.shape, y1_files.shape)
+    y_files = y1_files[r]
+    X_files = X1_files[r]
+
+    X_input = []
+    y_input = []
+    # if type=='val':
+    filenames = []
+    z = 0
+    #print(X_files, y_files)
+    for i in range(X_files.shape[0]):
+
+
+
+        X_file = X_files[i]
+        filenames.append(X_file[:-16])
+        X_img = imread(X_file)
+
+        if (scale != 0):
+            X_new = np.zeros((int(X_img.shape[0] / scale), int(X_img.shape[1] / scale), 3))
+            k = 0
+            for x in X_img[::scale]:
+                X_new[k] = x[::scale]
+                k += 1
+                X_img = X_new
+        X_input.append(X_img)
+    z = 0
+    for i in range(y_files.shape[0]):
+
+        y_file = y_files[i]
+        y_img = imread(y_file)
+        if (scale != 0):
+            y_new = np.zeros((int(y_img.shape[0] / scale), int(y_img.shape[1] / scale)))
+            k = 0
+            for y in y_img[::scale]:
+                y_new[k] = y[::scale]
+                k += 1
+                y_img = y_new
+        y_input.append(y_img)
+
+    X = np.array(X_input)
+    y = np.array(y_input)
+    if (type == 'val'):
+        return X, y, filenames
+    return X, y
 
 def importBatch(num_tests, start, verbose, type="train", scale = 0):   #load batch of data from train dataset
 
     y_files, X_files = getData(num_tests,start, type)
+
+
     X_input = []
     y_input = []
    # if type=='val':

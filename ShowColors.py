@@ -2,7 +2,7 @@ import numpy as np
 from skimage.io import imread, imshow, imsave
 
 
-def colorImage(input_image, output, classes_file, colors_file):
+def colorImage(input_image, output, classes_file, colors_file, saveto):
 
     CLASSES = open(classes_file).read().strip().split("\n")
 
@@ -17,3 +17,4 @@ def colorImage(input_image, output, classes_file, colors_file):
     mask = COLORS[classMap]
     output = ((0.4 * image) + (0.6 * mask)).astype("uint8")
     imshow(output)
+    imsave(saveto, output)
