@@ -1,7 +1,0 @@
-name: test_z
-dependencies:
-- jupyter=1.0.0
-- matplotlib=2.0.2
-- scikit-image=0.13.0
-- numpy
-- tqdm
